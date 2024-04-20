@@ -5,7 +5,7 @@ from tickets.models import Movie , Guest , Reservation
 
 class MovieSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = MovieSerializer
+		model = Movie
 		fields = '__all__'
 
 
@@ -19,4 +19,4 @@ class ReservationSerializer(serializers.ModelSerializer):
 class GuestSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Guest
-		fields = ['pk','reservation', 'name','mobile']   ##### uuid or slag instead of pk 
+		fields = ['pk','reservations', 'name','mobile']   ##### uuid or slag instead of pk 
