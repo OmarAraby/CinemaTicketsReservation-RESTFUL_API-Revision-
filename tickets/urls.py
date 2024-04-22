@@ -24,5 +24,10 @@ urlpatterns = [
     #4.2 GET & PUT & DELETE from rest framework Class Based View APIView
     path('rest/cbv/<int:pk>', views.CBV_pk.as_view()),
 
+    #5.1 GET & POST from rest framework Class Based View Mixins
+    path('rest/mixins/', views.mixins_list.as_view()),
+
+    #4.2 GET & PUT & DELETE from rest framework Class Based View Mixins
+    path('rest/mixins/<int:pk>', views.mixins_pk.as_view()),
 
 ]

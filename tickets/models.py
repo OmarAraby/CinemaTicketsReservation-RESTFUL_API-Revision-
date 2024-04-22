@@ -10,7 +10,7 @@ from django.db import models
 
 class Movie(models.Model):
     hall = models.CharField(max_length=10)
-    movie = models.CharField(max_length=10)
+    movie = models.CharField(max_length=20)
     date = models.DateField()
 
     class Meta:

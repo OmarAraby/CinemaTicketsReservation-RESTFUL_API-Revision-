@@ -123,7 +123,7 @@ class CBV_List(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+ 
 
 
 #4.2 GET PUT DELETE Class Based View ---- pk
@@ -155,3 +155,33 @@ class CBV_pk(APIView):
 
 
 #5 Mixins
+#5.1 Mixins list //  List and Create == GET and POST
+
+
+class mixins_list(mixins.ListModelMixin , mixins.CreateModelMixin , generics.GenericAPIView):
+	queryset = Guest.objects.all()
+	serializer_class = GuestSerializer
+
+	def get(self , request):
+		return self.list(request)
+
+
+	def post(self, request):
+		return self.create(request)
+
+
+
+#5.2 Mixins GET & PUT & DELETE
+class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.DestroyModelMixin , generics.GenericAPIView):
+	queryset = Guest.objects.all()
+	serializer_class = GuestSerializer
+
+	def get(self , request, pk):
+		return self.retrieve(request)
+
+
+	def put(self, request , pk):
+		return self.update(request)
+
+	def delete(self, request , pk):
+		return self.destroy(request)
