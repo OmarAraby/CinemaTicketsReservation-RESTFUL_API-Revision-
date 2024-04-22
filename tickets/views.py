@@ -7,7 +7,7 @@ from rest_framework import status , filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
-from rest_framework import generics , mixins
+from rest_framework import generics , mixins , viewsets
 
 # Create your views here.
 
@@ -152,8 +152,6 @@ class CBV_pk(APIView):
 
 
 
-
-
 #5 Mixins
 #5.1 Mixins list //  List and Create == GET and POST
 
@@ -188,18 +186,15 @@ class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.Des
 
 
 
-
 #6 Generics
 #6.1 Generics GET & POST
-
 class generics_list(generics.ListCreateAPIView):
 	queryset = Guest.objects.all()
 	serializer_class = GuestSerializer
 
 
-
 #6.2 Generics GET & PUT & DELETE
-class generics_pk(generics.RetrieveUpdataDestoryAPIView):
+class generics_pk(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Guest.objects.all()
 	serializer_class = GuestSerializer
 
@@ -207,5 +202,30 @@ class generics_pk(generics.RetrieveUpdataDestoryAPIView):
 
 
 
+
+
+
+
+
+
+
+#7 Viewsets
+class viewsets_guest(viewsets.ModelViewSet):
+	queryset = Guest.objects.all()
+	serializer_class = GuestSerializer
+
+
+class viewsets_movie(viewsets.ModelViewSet):
+	queryset = Movie.objects.all()
+	serializer_class = MovieSerializer
+	filter_backend = [filters.SearchFilter]
+	search_fields = ['movie']
+
+
+
+class viewsets_reservation(viewsets.ModelViewSet):
+	queryset = Reservation.objects.all()
+
+	serializer_class = ReservationSerializer
 
 

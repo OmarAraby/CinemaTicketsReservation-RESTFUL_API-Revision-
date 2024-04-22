@@ -1,8 +1,14 @@
 from django.urls import path , include
 from . import views
-
+from rest_framework.routers import DefaultRouter
 
 app_name='tickets'
+
+router = DefaultRouter()
+router.register('guests', views.viewsets_guest)
+router.register('movies', views.viewsets_movie)
+router.register('reservations', views.viewsets_reservation)
+
 
 urlpatterns = [
     
@@ -30,10 +36,14 @@ urlpatterns = [
     #5.2 GET & PUT & DELETE from rest framework Class Based View Mixins
     path('rest/mixins/<int:pk>', views.mixins_pk.as_view()),
 
-    #6. GET & POST from rest framework Class Based View Generics
+    #6.1 GET & POST from rest framework Class Based View Generics
     path('rest/generics/', views.generics_list.as_view()),
 
     #6.2 GET & PUT & DELETE from rest framework Class Based View Generics
     path('rest/generics/<int:pk>', views.generics_pk.as_view()),
+
+
+    #7 viewsets
+    path('rest/viewsets/',include(router.urls)),
 
 ]
