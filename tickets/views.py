@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework import generics , mixins , viewsets
-
+from rest_framework.authentication import BasicAuthentication , TokenAuthentication
+from rest_framework.permissions import IsAuthenticated 
 # Create your views here.
 
 
@@ -191,12 +192,16 @@ class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.Des
 class generics_list(generics.ListCreateAPIView):
 	queryset = Guest.objects.all()
 	serializer_class = GuestSerializer
+	authentication_classes = [BasicAuthentication]
+	permission_classes = [IsAuthenticated]
 
 
 #6.2 Generics GET & PUT & DELETE
 class generics_pk(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Guest.objects.all()
 	serializer_class = GuestSerializer
+	authentication_classes = [BasicAuthentication]
+	permission_class = [IsAuthenticated]
 
 
 
@@ -218,14 +223,51 @@ class viewsets_guest(viewsets.ModelViewSet):
 class viewsets_movie(viewsets.ModelViewSet):
 	queryset = Movie.objects.all()
 	serializer_class = MovieSerializer
-	filter_backend = [filters.SearchFilter]
-	search_fields = ['movie']
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['movie', 'hall']
 
 
 
 class viewsets_reservation(viewsets.ModelViewSet):
 	queryset = Reservation.objects.all()
-
 	serializer_class = ReservationSerializer
 
 
+
+
+
+
+
+#Find Movie  ---> FBV  ====>>>>> filter_backends = [filters.SearchFilter] -  search_fields = ['movie', 'hall']
+
+@api_view(['GET'])
+def find_movie(request):
+	movies = Movie.objects.filter( 
+		hall = request.data['hall'],
+		movie = request.data['movie'],
+
+		)
+	serializer = MovieSerializer(movies, many= True)
+	return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def new_reservation(request):
+	movie = Movie.objects.get(
+		hall = request.data['hall'],
+		movie = request.data['movie'],
+
+		)
+
+	guest = Guest()
+	guest.name = request.data['name']
+	guest,mobile = request.data['mobile']
+	guest.save()
+
+	reservation = Reservation()
+	reservation.guest = guest
+	reservation.movie = movie
+	reservation.save()
+
+	return Response(status = status.HTTP_201_CREATED)

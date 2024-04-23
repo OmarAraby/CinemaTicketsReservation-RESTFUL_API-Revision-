@@ -46,4 +46,10 @@ urlpatterns = [
     #7 viewsets
     path('rest/viewsets/',include(router.urls)),
 
+    #8 Fine Movie
+    path('rest/fpv/findmovie', views.find_movie),
+
+    #9 New Reservation
+    path('rest/fpv/newreservation', views.new_reservation),
+
 ]

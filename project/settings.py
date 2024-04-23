@@ -49,10 +49,20 @@ INSTALLED_APPS = [
 
 ]
 
+# there are 4 type of permissions in Rest Framework
+# [ AllowAny - IsAthenticated - IsAdminUser - IsAuthenticatedReadOnly ]
+
+
+REST_FRAMEWORK = {
+    # 'DEFAILT_AUTHENTICATION_CLASSES':['rest_framework.authentication.BasicAuthentication'],
+    # 'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated'],
 
 
 
-REST_FRAMEWORK = {}
+}
+
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
