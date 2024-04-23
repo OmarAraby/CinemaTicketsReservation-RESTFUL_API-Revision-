@@ -41,7 +41,9 @@ INSTALLED_APPS = [
 
 
     'rest_framework',
-    # APP
+    'rest_framework.authtoken',
+
+    #APP
     'tickets',
 
 
@@ -54,6 +56,7 @@ INSTALLED_APPS = [
 
 
 REST_FRAMEWORK = {
+      'DEFAILT_AUTHENTICATION_CLASSES':['rest_framework.authentication.TokenAuthentication'],
     # 'DEFAILT_AUTHENTICATION_CLASSES':['rest_framework.authentication.BasicAuthentication'],
     # 'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated'],
 

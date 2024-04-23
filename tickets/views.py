@@ -192,16 +192,18 @@ class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.Des
 class generics_list(generics.ListCreateAPIView):
 	queryset = Guest.objects.all()
 	serializer_class = GuestSerializer
-	authentication_classes = [BasicAuthentication]
-	permission_classes = [IsAuthenticated]
+	authentication_classes = [TokenAuthentication]
+	# authentication_classes = [BasicAuthentication]
+	# permission_classes = [IsAuthenticated]
 
 
 #6.2 Generics GET & PUT & DELETE
 class generics_pk(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Guest.objects.all()
 	serializer_class = GuestSerializer
-	authentication_classes = [BasicAuthentication]
-	permission_class = [IsAuthenticated]
+	authentication_classes = [TokenAuthentication]
+	# authentication_classes = [BasicAuthentication]
+	# permission_class = [IsAuthenticated]
 
 
 
