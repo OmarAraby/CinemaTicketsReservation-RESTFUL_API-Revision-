@@ -3,6 +3,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+from django.contrib.auth.models import User
+
 
 
 
@@ -50,6 +52,18 @@ class Reservation(models.Model):
     def __str__(self):
         return f"{self.guest} - {self.movie}"
 
+
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=40)
+    body = models.TextField()
+
+    class Meta:
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
+
+    def __str__(self):
+        return self.title
 
 
 

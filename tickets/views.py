@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse 
-from .models import Guest , Movie , Reservation
+from .models import Guest , Movie , Reservation , Post
 from rest_framework.decorators import api_view
-from .serializers import MovieSerializer , ReservationSerializer , GuestSerializer
+from .serializers import MovieSerializer , ReservationSerializer , GuestSerializer ,PostSerializer
 from rest_framework import status , filters 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,6 +10,7 @@ from django.http import Http404
 from rest_framework import generics , mixins , viewsets
 from rest_framework.authentication import BasicAuthentication , TokenAuthentication
 from rest_framework.permissions import IsAuthenticated 
+from .permissions import IsAutherOrReadOnly
 # Create your views here.
 
 
@@ -210,12 +211,6 @@ class generics_pk(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-
-
-
-
-
-
 #7 Viewsets
 class viewsets_guest(viewsets.ModelViewSet):
 	queryset = Guest.objects.all()
@@ -233,11 +228,6 @@ class viewsets_movie(viewsets.ModelViewSet):
 class viewsets_reservation(viewsets.ModelViewSet):
 	queryset = Reservation.objects.all()
 	serializer_class = ReservationSerializer
-
-
-
-
-
 
 
 #Find Movie  ---> FBV  ====>>>>> filter_backends = [filters.SearchFilter] -  search_fields = ['movie', 'hall']
@@ -273,3 +263,14 @@ def new_reservation(request):
 	reservation.save()
 
 	return Response(status = status.HTTP_201_CREATED)
+
+
+
+
+#10 post author editor
+class Post_pk(generics.RetrieveUpdateDestroyAPIView):
+	permission_class = [IsAutherOrReadOnly]
+	queryset = Post.objects.all()
+	serializer_class = PostSerializer
+
+

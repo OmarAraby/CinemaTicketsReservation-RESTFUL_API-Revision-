@@ -52,4 +52,9 @@ urlpatterns = [
     #9 New Reservation
     path('rest/fpv/newreservation', views.new_reservation),
 
+    #10 Post pk generics Post_pk
+    path('post/generics/<int:pk>', views.Post_pk.as_view()),
+
+
+
 ]
